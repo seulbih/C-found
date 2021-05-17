@@ -1,20 +1,25 @@
 #include <stdio.h>
-#include <string.h> //strlen함수 사용하기 위해 헤더파일 불러옴
+#include <stdlib.h> //rand, srand
+#include <time.h>//time
 
-void main() {
-	int len, i; //문자열의 길이변수, for문에서 쓰일 변수
-	char str[100]; //문자열 최대 100자까지 입력받을 문자열변수
+void main(){
+	int i,m; //for문용 변수
+	int num[11] = { 0 }; //난수 저장할 배열 생성하여 초기화
+	int maxcount=0; //가장 많이 생성된 수 저장할 변수
+	
+	srand(time(NULL)); //rand의 seed값 설정
 
-	printf("문자열 입력 : ");
-	scanf_s("%[^\n]s", str, 60); //문자열 입력받음
-	/*%[^\n]s 형식 지정자 사용으로 공백 포함하여 입력받음*/
-	printf("\n");
-
-	len = strlen(str); //문자열str의 길이를 len에 대입
-
-	printf("결과 : ");
-	for (i = len - 1; i >= 0; i--) { //문자열길이-1부터 0까지, str[len-1]~str[0] 반복문 이용하여 문자 출력
-		printf("%c", str[i]);
+	for (i = 1; i < 100; i++) { //1~10까지 수 생성하여 해당하는 배열의 인덱스에 카운트
+		num[(rand() % 10)+1]++; //(생성횟수 카운트)
 	}
-	printf("\n");
+
+
+	for (m = 1; m < 11; m++) {
+		printf("%d : %d회\n", m, num[m]); //1~10까지 생성 횟수 출력
+		if (num[m] > num[maxcount]) { //가장 많이 생성된 수 maxcount에 업그레이드
+			maxcount = m;
+		}
+	}
+
+	printf("\n%d가 %d회로 가장 많이 랜덤 수로 출력되었습니다.\n", maxcount, num[maxcount]); //가장 많이 생성된 수인 maxcount와 해당 인덱스의 수인 num[maxcount]를 이용하여 횟수 출력
 }
